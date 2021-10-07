@@ -111,4 +111,4 @@ combine_day_cases_and_inpatient_table[["table_body"]] <- combine_day_cases_and_i
   filter(!str_detect(stat_1, 'NA'))
 
 saveRDS(combine_day_cases_and_inpatient_table, here::here('output', 'tables', 'weekly_hospital.rds'))
-saveRDS(combine_day_cases_and_inpatient_table, '/home/emma/Documents/upgrade/index/table/combine_day_cases_and_inpatient_table.rds')
+saveRDS(combine_day_cases_and_inpatient_table, 'redacted_filepath/table/combine_day_cases_and_inpatient_table.rds')

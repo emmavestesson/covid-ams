@@ -77,7 +77,7 @@ ggplot(., aes(x=week, y= fct_rev(tfc_name_short), fill = normalised)) +
 
 ggsave(here::here('output', 'heatmap_inpatient_days_over_time_weekly_normalised.jpeg'), dpi=800, height=15, width=15, units = 'cm') 
 
-ggsave('/home/emma/Documents/upgrade/index/figure/heatmap_inpatient_days_over_time_weekly_normalised.jpeg', dpi=800, height=15, width=15, units = 'cm') 
+ggsave('redacted_filepath/figure/heatmap_inpatient_days_over_time_weekly_normalised.jpeg', dpi=800, height=15, width=15, units = 'cm') 
 
 
 
@@ -367,6 +367,6 @@ pd_by_tfc_week_dc %>%
         plot.title=element_text(family="Times") )
 
 ggsave(here::here('output', 'heatmap_day_cases_days_over_time_weekly_normalised.jpeg'), dpi=800, height=15, width=15, units = 'cm') 
-ggsave('/home/emma/Documents/upgrade/index/figure/heatmap_day_cases_days_over_time_weekly_normalised.jpeg', dpi=800, height=15, width=15, units = 'cm') 
+ggsave('redacted_filepath/figure/heatmap_day_cases_days_over_time_weekly_normalised.jpeg', dpi=800, height=15, width=15, units = 'cm') 
 
 

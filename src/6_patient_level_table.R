@@ -40,5 +40,5 @@ admission_summary <- one_row_per_admission %>%
 
 
 saveRDS(admission_summary, here::here('output', 'tables', 'patient_admission_summary.rds'))
-saveRDS(admission_summary, '/home/emma/Documents/upgrade/index/table/patient_admission_summary.rds')
+saveRDS(admission_summary, 'redacted_filepath/table/patient_admission_summary.rds')
 

@@ -15,12 +15,6 @@ tfc_inpatient <- one_row_per_day_dot %>%
   pull(tfc_name)
 
 
-tfc_day_cases <- one_row_per_day_dot %>% 
-  filter(patient_class=='Day Case') %>%
-  distinct(adms_id, tfc_name) %>% 
-  count(tfc_name) %>% 
-  filter(n>200) %>% 
-  pull(tfc_name)
 
 # Define function to create variables needed to calculate dot per 1000 pds for different groups
 
@@ -63,15 +57,12 @@ pd_by_tfc_inpatient_table <- pd_by_tfc_week_inpatient %>%
   tbl_summary(by = covid) %>% 
   add_difference() %>% 
   modify_table_body(~.x %>% relocate(stat_2, .before=stat_1))
-saveRDS(pd_by_tfc_inpatient_table, '/home/emma/Documents/upgrade/index/table/pd_by_tfc_inpatient_table.rds')
+saveRDS(pd_by_tfc_inpatient_table, 'redacted_filepath/table/pd_by_tfc_inpatient_table.rds')
 
 pd_by_tfc_day_inpatient <- df_inpatient %>% 
   dot(dot=dot, date, tfc_name) %>% 
   group_by(tfc_name) %>% 
   mutate(tfc_name_short = str_remove(tfc_name,'Paediatric ')) %>% 
-  # group_by(week) %>% 
-  # mutate(weekly_patient_days_total = sum(patient_days), 
-  #        weekly_patient_days_p = patient_days/weekly_patient_days_total) %>% 
   ungroup() 
 
 dot_by_tfc_inpatient_table_day <- pd_by_tfc_day_inpatient %>% 
@@ -114,57 +105,6 @@ DOT_by_tfc <- pd_by_tfc_week_inpatient %>%
         # legend.key.width = unit(0.4, 'cm'), 
         legend.title = element_blank(),
         legend.position = c(0.9,0.9))
-ggsave(filename = '/home/emma/Documents/upgrade/index/figure/DOT_by_TFC.png', plot = DOT_by_tfc)
+ggsave(filename = 'redacted_filepath/figure/DOT_by_TFC.png', plot = DOT_by_tfc)
 
-saveRDS(DOT_by_tfc, '/home/emma/Documents/upgrade/index/figure/DOT_by_TFC.rds')
-# day case
-
-
-
-df_dc <- one_row_per_day_dot %>% 
-  filter(patient_class=='Day Case') %>% 
-  mutate(week = floor_date(date, unit = 'weeks', week_start = 1), 
-         month = floor_date(date, unit = 'month'), 
-         tfc_name = case_when(tfc_name %in% tfc_day_cases ~ tfc_name, 
-                              is.na(tfc_name) ~ 'Other',
-                              TRUE ~ 'Other')
-  ) 
-
-
-pd_by_tfc_week_dc <- df_dc %>% 
-  dot(dot=dot, week, tfc_name) %>% 
-  group_by(tfc_name) %>% 
-  mutate(tfc_name_short = str_remove(tfc_name,'Paediatric ')) %>% 
-  group_by(week) %>% 
-  mutate(weekly_patient_days_total = sum(patient_days), 
-         weekly_patient_days_p = patient_days/weekly_patient_days_total) %>% 
-  ungroup() 
-
-
-
-pd_by_tfc_dc_table <- pd_by_tfc_week_dc %>% 
-  select(week,  tfc_name_short, patient_days) %>% 
-  pivot_wider(names_from = tfc_name_short, values_from = patient_days, values_fill =0) %>% 
-  mutate(covid = week>= covid_start)  %>% 
-  select(-week) %>% 
-  
-  mutate(         covid=factor(covid, levels = c(FALSE, TRUE), labels=c('Pre-COVID-19 ', 'COVID-19 ')), 
-                  covid = fct_rev(covid)) %>% 
-  tbl_summary(by = covid) %>% 
-  add_p() %>% 
-  modify_table_body(~.x %>% relocate(stat_2, .before=stat_1))
-
-
-saveRDS(pd_by_tfc_dc_table, '/home/emma/Documents/upgrade/index/table/pd_by_tfc_dc_table.rds')
-
-
-pd_by_tfc_dc_table <- pd_by_tfc_week_dc %>% 
-  select(week,  tfc_name_short, dot_per_1000_pd) %>% 
-  pivot_wider(names_from = tfc_name_short, values_from = dot_per_1000_pd, values_fill =0) %>% 
-  mutate(covid = week>= covid_start)  %>% 
-  select(-week) %>% 
-  mutate(covid=factor(covid, levels = c(FALSE, TRUE), labels=c('Pre-COVID-19 ', 'COVID-19 ')), 
-         covid = fct_rev(covid)) %>% 
-  tbl_summary(by = covid) %>% 
-  add_difference() %>% 
-  modify_table_body(~.x %>% relocate(stat_2, .before=stat_1))
+saveRDS(DOT_by_tfc, 'redacted_filepath/figure/DOT_by_TFC.rds')
