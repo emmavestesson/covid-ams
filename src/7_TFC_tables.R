@@ -100,9 +100,6 @@ DOT_by_tfc <- pd_by_tfc_week_inpatient %>%
         axis.ticks.length =  unit(0.1, 'cm'), 
         panel.grid.minor = element_blank(), 
         panel.grid.major.y = element_blank(),
-        # legend.key.size = unit(0.1, 'cm'), #change legend key size
-        # legend.key.height = unit(0.6, 'cm'), #change legend key height
-        # legend.key.width = unit(0.4, 'cm'), 
         legend.title = element_blank(),
         legend.position = c(0.9,0.9))
 ggsave(filename = 'redacted_filepath/figure/DOT_by_TFC.png', plot = DOT_by_tfc)

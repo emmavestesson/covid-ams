@@ -27,16 +27,6 @@ dc <- one_row_per_day_dot %>%
   filter(patient_class == 'Day Case') %>% 
   mutate(tfc_name_lumped = fct_lump_min(tfc_name, 2000))
 
-dc %>% 
-  mutate(covid = date>=covid_start) %>% 
-  select(tfc_name, covid) %>% 
-  tbl_summary(by = covid)
-  
-
-dc %>% 
-  mutate(covid = date>=covid_start) %>% 
-  select(dot_antibacterial_drugs, tfc_name) %>% 
-  tbl_summary(by = tfc_name)
 
 
 df <- one_row_per_day_dot %>% 
